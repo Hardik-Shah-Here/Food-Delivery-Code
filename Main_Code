@@ -1,0 +1,93 @@
+starting = input()
+closing = input()
+present = input()
+
+hr = int(present[:2])
+mins = int(present[3:5])
+day = present[5:]
+day_c = 0
+if day=="pm" :
+    day_c = 1
+
+st_hr = int(starting[:2])
+st_min = int(starting[3:5])
+st_day = starting[5:]
+st_day_c = 0
+if st_day=="pm" :
+    st_day_c = 1
+
+cl_hr = int(closing[:2])
+cl_min = int(closing[3:5])
+cl_day = closing[5:]
+cl_day_c = 0
+if cl_day=="pm" :
+    cl_day_c = 1
+
+flag=0
+if day_c>st_day_c :
+    flag=1
+elif hr>st_hr :
+    flag=1
+elif mins>st_min :
+    flag=1
+else :
+    flag=0
+    
+if day_c<cl_day_c :
+    flag=1
+elif hr<cl_hr :
+    flag=1
+elif mins<cl_mins :
+    flag=1
+else :
+    flag=0
+    
+#print(hr, mins, day, day_c)
+#print(st_hr, st_min, st_day, st_day_c)
+#print(cl_hr, cl_min, cl_day, cl_day_c)
+#print(flag)
+no_hr=0
+no_min=0
+if flag != 0:
+    if day_c == cl_day_c :
+        no_hr = cl_hr-1-hr
+        no_min = 60 - mins
+    else :
+        no_hr = (cl_hr+12)-hr-1
+        no_min = 60 - mins + cl_min
+    time = (no_hr*60)+no_min
+    slots = int(time/30)
+    
+   # print(no_hr, no_min)
+   # print(time,slots)
+    
+    
+    for i in range(slots):
+        count=0
+        while(count<30):
+            mins=mins+1
+            if mins==60 :
+                mins=0
+                hr=hr+1
+            count=count+1
+            if hr==12 :
+                if day_c==0 :
+                    day="pm"
+                else :
+                    day="am"
+            if hr==13 :
+                hr=1
+        if hr<10 :
+            if mins<10 :
+                net = "0"+str(hr)+":0"+str(mins)+day
+                print(net)
+            else :
+                net = "0"+str(hr)+":"+str(mins)+day
+                print(net)
+        else :
+            if mins<10 :
+                net = str(hr)+":0"+str(mins)+day
+                print(net)
+            else :
+                net = str(hr)+":"+str(mins)+day
+                print(net)
